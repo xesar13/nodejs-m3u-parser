@@ -16,7 +16,7 @@ async function parseM3U(url) {
                 const attributes = info[0].split(' ');
                 currentItem = {
                     title: info[1] || '',
-                    logo: ''
+                    logo: 'pkg:/images/icon_focus_hd.png'
                 };
                 attributes.forEach(attr => {
                     if (attr.startsWith('tvg-logo=')) {
