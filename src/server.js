@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const m3uRoutes = require('./routes/m3uRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 app.use(bodyParser.json());
 app.use('/api', m3uRoutes);
