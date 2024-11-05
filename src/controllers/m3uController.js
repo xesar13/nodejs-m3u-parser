@@ -55,11 +55,7 @@ class M3UController {
 
     async determineUrl(req, res) {
         const { id } = req.params;
-        const urlList = [
-            { id: '1', url: 'https://support.nextream.net/mylist.m3u8' },
-            { id: '2', url: 'http://plex.nextream.net/mylist.m3u' },
-            { id: '3', url: 'http://example.com/playlist3.m3u' }
-        ];
+        const urlList = m3uService.getUrls();
         
         const item = urlList.find(item => item.id === id);
         const m3uService = require('../services/m3uService');

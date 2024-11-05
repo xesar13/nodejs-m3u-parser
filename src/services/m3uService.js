@@ -1,4 +1,6 @@
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 async function parseM3U(url) {
     try {
@@ -36,8 +38,15 @@ async function parseM3U(url) {
     }
 }
 
+function getUrls() {
+    const filePath = path.join(__dirname, '../../urls.json');
+    const fileData = fs.readFileSync(filePath);
+    return JSON.parse(fileData);
+}
+
 module.exports = {
-    parseM3U
+    parseM3U,
+    getUrls
 };
 
 function generateId() {
