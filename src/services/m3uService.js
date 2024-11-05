@@ -17,7 +17,7 @@ async function parseM3U(url) {
                 const info = line.split(',');
                 const attributes = info[0].split(' ');
                 currentItem = {
-                    title: info[1] || '',
+                    title: (info[1] || '').trim(), // Eliminar espacios en blanco del inicio del título
                     logo: 'pkg:/images/icon_focus_hd.png'
                 };
                 attributes.forEach(attr => {
@@ -25,7 +25,7 @@ async function parseM3U(url) {
                         currentItem.logo = attr.split('=')[1].replace(/"/g, '');
                     }
                 });
-            } else if (line && !line.startsWith('#')) {
+            } else if (line && (line.startsWith('https') || line.startsWith('http'))) {
                 currentItem.url = line;
                 parsedData.push(currentItem);
                 currentItem = {};
