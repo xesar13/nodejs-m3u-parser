@@ -55,8 +55,8 @@ class M3UController {
 
     async determineUrl(req, res) {
         const { id } = req.params;
+        const m3uService = require('../services/m3uService');
         const urlList = m3uService.getUrls();
-
         const item = urlList.find(item => item.id === id);
         const getData = await m3uService.parseM3U(item.url);
         console.log('Datos parseados:', getData);
