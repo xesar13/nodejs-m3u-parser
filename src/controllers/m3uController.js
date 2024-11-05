@@ -74,6 +74,38 @@ class M3UController {
         }
     }
 
+    async searchByTitle(req, res) {
+        const { title,id } = req.params;
+        if (!title || !id) {
+            return res.status(400).json({ error: "El parámetro 'title' e 'id' son requerido." });
+        }
+
+        try {
+            const m3uService = require('../services/m3uService');
+            const urlList = m3uService.getUrls();
+            const item = urlList.find(item => item.id === id);
+            const parsedData = await m3uService.parseM3U(item.url);
+
+            // Verificar que cada elemento tenga una propiedad title
+            const filteredData = parsedData.filter(item => {
+                if (!item.title) {
+                    console.error('Elemento sin título:', item);
+                    return false;
+                }
+                return item.title.toLowerCase().includes(title.toLowerCase());
+            });
+
+            if (filteredData.length === 0) {
+                return res.status(404).json({ error: "No se encontraron resultados para el título proporcionado." });
+            }
+
+            const response = await this.buildResponse(filteredData);
+            return res.json(response);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al analizar los archivos M3U." });
+        }
+    }
+
     async buildResponse(parsedData) {
         return {
             providerName: "Roku Developers",
