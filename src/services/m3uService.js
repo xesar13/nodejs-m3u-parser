@@ -18,11 +18,11 @@ async function parseM3U(url) {
                 const attributes = info[0].split(' ');
                 currentItem = {
                     title: (info[1] || '').trim(), // Eliminar espacios en blanco del inicio del título
-                    logo: 'pkg:/images/icon_focus_hd.png'
+                    thumbnail: 'pkg:/images/icon_focus_hd.png'
                 };
                 attributes.forEach(attr => {
                     if (attr.startsWith('tvg-logo=')) {
-                        currentItem.logo = attr.split('=')[1].replace(/"/g, '');
+                        currentItem.thumbnail = attr.split('=')[1].replace(/"/g, '');
                     }
                 });
             } else if (line && (line.startsWith('https') || line.startsWith('http'))) {

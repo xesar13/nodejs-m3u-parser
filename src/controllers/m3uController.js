@@ -130,14 +130,14 @@ class M3UController {
             lastUpdated: new Date().toISOString(),
             listm3u8: parsedData.map(item => ({
                 longDescription: "Learn how streaming works on the Roku platform. This video explains how content is delivered from a content delivery network (CDN) to a Roku device via a content feed",
-                thumbnail: item.logo,
+                thumbnail: item.thumbnail,
                 releaseDate: "2020-01-15",
-                genres: "educational",
+                genres: item.genres,
                 tags: "getting-started",
                 id: "52ac61e1bfc2459aae0388731616ac9f",
                 shortDescription: "Learn how streaming works on the Roku platform. This video explains how content is delivered from a content delivery network (CDN) to a Roku device via a content feed",
                 title: item.title,
-                videoType: "HLS",
+                videoType: item.videoType,
                 url: item.url,
                 quality: "HD"
             }))
