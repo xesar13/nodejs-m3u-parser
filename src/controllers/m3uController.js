@@ -19,7 +19,7 @@ class M3UController {
     }
 
     async searchM3U(req, res) {
-        const { url, title, limit } = req.body;
+        const { url, title } = req.body;
 
         if (!url || !title) {
             return res.status(400).json({ error: "URL y título son requeridos." });
@@ -37,7 +37,7 @@ class M3UController {
                     return false;
                 }
                 return item.title.toLowerCase().includes(title.toLowerCase());
-            }).slice(0, limit);
+            });
 
             console.log('Datos filtrados:', filteredData);
 
@@ -54,7 +54,7 @@ class M3UController {
     }
 
     async parseIPTVJson(req, res) {
-        const { type } = req.body;
+        const { type } = req.params;
         if (!type) {
             return res.status(400).json({ error: "El parámetro 'type' son requerido." });
         }
