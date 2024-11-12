@@ -53,6 +53,23 @@ class M3UController {
         }
     }
 
+    async parseIPTVJson(req, res) {
+        const { type } = req.body;
+        if (!type) {
+            return res.status(400).json({ error: "El parámetro 'type' son requerido." });
+        }
+        try {
+            const m3uService = require('../services/m3uService');
+            const parsedData = await m3uService.parseIPTVUrl(type);
+            console.log('Datos parseados:', parsedData);
+
+            const response = await this.buildResponse(parsedData);
+            return res.json(response);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al analizar el archivo M3U." });
+        }
+    }
+
     async determineUrl(req, res) {
         const { id } = req.params;
         const m3uService = require('../services/m3uService');
