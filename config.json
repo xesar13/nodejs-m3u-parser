@@ -3,8 +3,9 @@
     "username": "Rn3V3vWxhC9U",
     "password": "uh6RDtufna3r",
     "stream_types": {
-        "live": "Live Stream",
-        "vod": "Video on Demand"
+        "live": ["get_live_streams", "get_live_categories"],
+        "movie": ["get_vod_streams", "get_vod_categories"],
+        "series": ["get_series", "get_series_categories"]
     },
     "stream_extensions": {
         "live": "m3u8",
@@ -23,5 +24,82 @@
         "674": "24/7 EXCLUSIVO SERIES",
         "675": "24/7 EXCLUSIVO INGLES"
 
-    }
+    },
+    "menustart":{
+        "menu":[	
+		{
+			"longDescription": "Video demonstrating how a developer can use the Developer Dashboard's user access management feature to give team members the authority to take administrative actions, which are appropriate for their respective organizational roles",
+			"thumbnail": "https://support.nextream.net/tvenvivo_banner.png",
+			"releaseDate": "2020-01-20",
+			"genres": [
+				"educational"
+			],
+			"tags": [
+				"live"
+			],
+			"id": "shortform-a59a8c9b7140da32b98cb91fe415a2e3e7dc0660",
+			"shortDescription": "Demonstrates how a developer can use the Developer Dashboard's user access management feature",
+			"title": "TV en VIVO",
+			"content": {
+				"duration": 576,
+				"videos": [{
+					"videoType": "HLS",
+					"url": "https://ovp-selector.sr.roku.com/v1/0c18bf4e-b295-437c-badb-3a171a1b52aa?format=hls",
+					"quality": "HD"
+				}],
+				"language": "en-us",
+				"dateAdded": "2020-01-29T02:39:11Z"
+			}
+		},
+			{
+			"longDescription": "Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.",
+			"thumbnail": "https://support.nextream.net/movies_banner.png",
+			"releaseDate": "2020-01-20",
+			"genres": [
+				"educational"
+			],
+			"tags": [
+				"movie"
+			],
+			"id": "shortform-4374be10035077242dde8b7fe272e509ad6e563a",
+			"shortDescription": "Demonstrates the Roku automated channel testing software.",
+			"title": "Peliculas",
+			"content": {
+				"duration": 713,
+				"videos": [{
+					"videoType": "HLS",
+					"url": "https://ovp-selector.sr.roku.com/v1/f73763a9-8105-4b78-90e0-381ea0d0128b?format=hls",
+					"quality": "HD"
+				}],
+				"language": "en-us",
+				"dateAdded": "2020-01-29T02:39:10Z"
+			}
+		},
+		{
+			"longDescription": "Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.",
+			"thumbnail": "https://support.nextream.net/banner_series.png",
+			"releaseDate": "2020-01-20",
+			"genres": [
+				"educational"
+			],
+			"tags": [
+				"series"
+			],
+			"id": "shortform-4374be10035077242dde8b7fe272e509ad6e563a",
+			"shortDescription": "Demonstrates the Roku automated channel testing software.",
+			"title": "TV Series",
+			"content": {
+				"duration": 713,
+				"videos": [{
+					"videoType": "HLS",
+					"url": "https://ovp-selector.sr.roku.com/v1/f73763a9-8105-4b78-90e0-381ea0d0128b?format=hls",
+					"quality": "HD"
+				}],
+				"language": "en-us",
+				"dateAdded": "2020-01-29T02:39:10Z"
+			}
+		}
+	]
+}
+    
 }

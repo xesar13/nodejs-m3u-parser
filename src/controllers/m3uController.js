@@ -63,10 +63,10 @@ class M3UController {
             const parsedData = await m3uService.parseIPTVUrl(type);
             console.log('Datos parseados:', parsedData);
 
-            const response = await this.buildResponse(parsedData);
-            return res.json(response);
+            //const response = await this.buildResponse(parsedData);
+            return res.json(parsedData);
         } catch (error) {
-            return res.status(500).json({ error: "Error al analizar el archivo M3U." });
+            return res.status(500).json({ error: "Error al analizar la url JSON." });
         }
     }
 
@@ -124,22 +124,26 @@ class M3UController {
     }
 
     async buildResponse(parsedData) {
+        const response = parsedData;
         return {
             providerName: "Roku Developers",
             language: "en-US",
             lastUpdated: new Date().toISOString(),
-            listm3u8: parsedData.map(item => ({
-                longDescription: "Learn how streaming works on the Roku platform. This video explains how content is delivered from a content delivery network (CDN) to a Roku device via a content feed",
-                thumbnail: item.thumbnail,
-                releaseDate: "2020-01-15",
-                genres: item.genres,
-                tags: "getting-started",
-                id: "52ac61e1bfc2459aae0388731616ac9f",
-                shortDescription: "Learn how streaming works on the Roku platform. This video explains how content is delivered from a content delivery network (CDN) to a Roku device via a content feed",
-                title: item.title,
-                videoType: item.videoType,
-                url: item.url,
-                quality: "HD"
+            items: response.map(item => ({
+                longDescription: item,
+                thumbnail: item,
+                releaseDate: item,
+                genres: item,
+                tags: item,
+                id: item.id,
+                shortDescription: item,
+                title: item,
+                content: {
+                    duration: item,
+                    videos: item,
+                    language: item,
+                    dateAdded: item
+                }
             }))
         };
     }

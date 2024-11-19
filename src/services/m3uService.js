@@ -42,32 +42,67 @@ async function parseIPTVUrl(type) {
     try {
         const configPath = getConfig();
         
-        const { base_url, username, password, stream_types, stream_extensions, categories } = configPath;
+        const { base_url, username, password, stream_types, stream_extensions, categories,menustart } = configPath;
+        if (type === 'menu') {
+            return {
+                providerName: "Roku Developers",
+                language: "en-US",
+                lastUpdated: new Date().toISOString(),
+                ...menustart
+            };
+        }
+        const [streamAction, categoryAction] = stream_types[type];
 
-        const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=get_live_streams`);
+        const responseCategories = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${categoryAction}`);
+        const categoriesData = responseCategories.data;
+
+        const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${streamAction}`);
         const data = response.data;
 
-        const filteredData = data.filter(item => categories.hasOwnProperty(item.category_id));
+      //  const filteredData = data.filter(item => categoriesData.some(category => category.hasOwnProperty(item.category_id)));
+        //const filteredData = data.filter(item => categoriesData.some(category => category.category_id === item.category_id));
+        //const dataToUse = filteredData.length ? filteredData : data;
+
+        const filteredData = data.filter(item => categoriesData.some(category => category.category_id === item.category_id));
         const dataToUse = filteredData.length ? filteredData : data;
 
-        const parsedData = dataToUse.map(item => {
-            const extension = stream_extensions[item.stream_type] || 'm3u8';
-            return {
-                longDescription: 'Learn how streaming works on the Roku platform. This video explains how content is delivered from a content delivery network (CDN) to a Roku device via a content feed',
+        const categorizedData = dataToUse.reduce((acc, item) => {
+            const category = categoriesData.find(category => category.category_id === item.category_id);
+            const categoryName = category ? category.category_name.trim() : 'Unknown';
+               const parsedItem = {
+                longDescription: 'Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.',
                 thumbnail: item.stream_icon || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
-                releaseDate: '2020-01-15',
-                genres: categories[item.category_id] || 'Unknown',
-                tags: 'getting-started',
-                id: item.stream_id,
-                shortDescription: 'Learn how streaming works on the Roku platform. This video explains how content is delivered from a content delivery network (CDN) to a Roku device via a content feed',
+                releaseDate: '2020-01-20',
+                genres: ['educational'],
+                tags: ['demo'],
+                id: generateId(),
+                shortDescription: 'Demonstrates the Roku automated channel testing software.',
                 title: item.name,
-                videoType: stream_types[item.stream_type] || 'Unknown',
-                url: `${base_url}/${type}/${username}/${password}/${item.stream_id}.${extension}`,
-                quality: 'HD'
+                content: {
+                    duration: 713,
+                    videos: [{
+                        videoType:  item.stream_type || 'Unknown',
+                        url: `${base_url}/${type}/${username}/${password}/${item.stream_id}.${item.container_extension}`,
+                        quality: 'HD'
+                    }],
+                    language: 'en-us',
+                    dateAdded: '2020-01-29T02:39:10Z'
+                }
             };
-        });
 
-        return parsedData;
+            if (!acc[categoryName]) {
+                acc[categoryName] = [];
+            }
+            acc[categoryName].push(parsedItem);
+            return acc;
+        }, {});
+
+        return {
+            providerName: "Roku Developers",
+            language: "en-US",
+            lastUpdated: new Date().toISOString(),
+            ...categorizedData
+        };
     } catch (error) {
         throw new Error('Error al obtener el archivo JSON: ' + error.message);
     }
