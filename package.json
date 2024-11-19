@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-m3u-parser",
+  "name": "nodejs-m3u-xtreamcodes-parser",
   "version": "1.0.0",
-  "description": "API para parsear archivos M3U y devolver la información en formato JSON.",
+  "description": "API para parsear archivos M3U, procesar API de Xtream UI y devolver la información en formato JSON.",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/server.js"
@@ -10,6 +10,6 @@
     "express": "^4.18.2",
     "axios": "^1.3.3"
   },
-  "author": "Tu Nombre",
+  "author": "Cesar Jhoanny Mendivil Rubio",
   "license": "MIT"
 }
