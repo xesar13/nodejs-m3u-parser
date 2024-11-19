@@ -82,7 +82,7 @@ async function parseIPTVUrl(type) {
                     duration: 713,
                     videos: [{
                         videoType:  item.stream_type || 'm3u8',
-                        url: `${base_url}/${type}/${username}/${password}/${item.stream_id}.${item.container_extension}`,
+                        url: `${base_url}/${type}/${username}/${password}/${item.stream_id}.${item.container_extension || 'm3u8'}`,
                         quality: 'HD'
                     }],
                     language: 'en-us',
