@@ -81,14 +81,14 @@ async  parseIPTVUrl(type) {
                 releaseDate: '2020-01-20',
                 genres: ['educational'],
                 tags: [type],
-                id: this.generateId(),
+                id: item.stream_id || item.series_id,
                 shortDescription: 'Demonstrates the Roku automated channel testing software.',
                 title: item.name,
                 content: {
                     duration: 713,
                     videos: [{
                         videoType:  item.stream_type || 'm3u8',
-                        url: `${base_url}/${type}/${username}/${password}/${item.stream_id}.${item.container_extension || 'm3u8'}`,
+                        url: `${base_url}/${type}/${username}/${password}/${item.stream_id || item.series_id}.${item.container_extension || 'm3u8'}`,
                         quality: 'HD'
                     }],
                     language: 'en-us',
