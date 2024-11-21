@@ -139,6 +139,9 @@ async getSeriesData(seriesInfo,base_url,username,password,seriesId) {
     const reponse = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${seriesInfo}&series_id=${seriesId}`);
     const seriesData = reponse.data;
     return {
+        providerName: "Roku Developers",
+        language: "en-US",
+        lastUpdated: new Date().toISOString(),
         series: [
             {
                 id: `series_${seriesData.info.title.replace(/\s+/g, '_').toLowerCase()}_${seriesId}`,
