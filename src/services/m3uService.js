@@ -80,7 +80,7 @@ async  parseIPTVUrl(type) {
                 thumbnail: item.stream_icon || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
                 releaseDate: '2020-01-20',
                 genres: ['educational'],
-                tags: ['demo'],
+                tags: [type],
                 id: this.generateId(),
                 shortDescription: 'Demonstrates the Roku automated channel testing software.',
                 title: item.name,
