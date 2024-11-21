@@ -1,8 +1,14 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-
-async function parseM3U(url) {
+class M3UService {
+    constructor() {
+        if (!M3UService.instance) {
+            M3UService.instance = this;
+        }
+        return M3UService.instance;
+    }
+async  parseM3U(url) {
     try {
         const response = await axios.get(url);
         const data = response.data;
@@ -38,9 +44,9 @@ async function parseM3U(url) {
     }
 }
 
-async function parseIPTVUrl(type) {
+async  parseIPTVUrl(type) {
     try {
-        const configPath = getConfig();
+        const configPath = this.getConfig();
         
         const { base_url, username, password, stream_types, stream_extensions, categories,menustart } = configPath;
         if (type === 'menu') {
@@ -75,7 +81,7 @@ async function parseIPTVUrl(type) {
                 releaseDate: '2020-01-20',
                 genres: ['educational'],
                 tags: ['demo'],
-                id: generateId(),
+                id: this.generateId(),
                 shortDescription: 'Demonstrates the Roku automated channel testing software.',
                 title: item.name,
                 content: {
@@ -108,13 +114,13 @@ async function parseIPTVUrl(type) {
     }
 }
 
-function getUrls() {
+ getUrls() {
     const filePath = path.join(__dirname, '../../urls.json');
     const fileData = fs.readFileSync(filePath);
     return JSON.parse(fileData);
 }
 
-function getConfig() {
+ getConfig() {
     const filePath = path.join(__dirname, '../../config.json');
     if (!fs.existsSync(filePath)) {
         throw new Error('El archivo config.json no existe.');
@@ -124,12 +130,67 @@ function getConfig() {
 }
 
 
-function generateId() {
+ generateId() {
     return Math.random().toString(36).substr(2, 16);
 }
 
-module.exports = {
-    parseM3U,
-    parseIPTVUrl,
-    getUrls
-};
+
+async getSeriesData(seriesInfo,base_url,username,password,seriesId) {
+    const reponse = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${seriesInfo}&series_id=${seriesId}`);
+    const seriesData = reponse.data;
+    return {
+        series: [
+            {
+                id: `series_${seriesData.info.title.replace(/\s+/g, '_').toLowerCase()}_${seriesId}`,
+                title: seriesData.info.title,
+                releaseDate: seriesData.info.releaseDate,
+                shortDescription: seriesData.info.plot,
+                thumbnail: seriesData.info.cover,
+                genres: seriesData.info.genre.split(',').map(genre => genre.trim()),
+                tags: ["series"],
+                seasons: seriesData.seasons.map(season => ({
+                    title: season.name,
+                    episodes: seriesData.episodes[season.season_number].map(episode => ({
+                        id: `shortform-${episode.id}`,
+                        title: episode.title,
+                        episodeNumber: episode.episode_num,
+                        content: {
+                            dateAdded: episode.info.release_date,
+                            videos: [{
+                                videoType: "HLS",
+                                url: `${base_url}/series/${username}/${password}/${episode.id}.${episode.container_extension || 'mp4'}`,
+                                quality: "HD"
+                            }],
+                            duration: episode.info.duration_secs,
+                            captions: episode.subtitles.map(subtitle => ({
+                                language: subtitle.language,
+                                captionType: subtitle.type,
+                                url: subtitle.url
+                            })),
+                            language: "en-us"
+                        },
+                        thumbnail: episode.info.movie_image,
+                        shortDescription: episode.info.plot,
+                        releaseDate: episode.info.release_date,
+                        longDescription: episode.info.plot,
+                        tags: ["series"],
+                        genres: seriesData.info.genre.split(',').map(genre => genre.trim())
+                    }))
+                }))
+            }
+        ]
+    };
+}
+
+async groupEpisodesBySeason(seriesId) {
+    const configPath = this.getConfig();
+    const { base_url, username, password, stream_types } = configPath;
+    const seriesInfo = stream_types.series[2]; // Obtener el valor de `get_series_info`
+    const response = await this.getSeriesData(seriesInfo,base_url,username,password,seriesId);
+    return response;
+}
+}
+const instance = new M3UService();
+Object.freeze(instance);
+
+module.exports = instance;

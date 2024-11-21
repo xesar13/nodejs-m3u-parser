@@ -1,0 +1,273 @@
+{
+    "seasons": [
+        {
+            "air_date": "2018-05-02",
+            "episode_count": 10,
+            "id": 99459,
+            "name": "Temporada 1",
+            "overview": "Décadas después del torneo que cambió sus vidas, la rivalidad entre Johnny y Daniel se reaviva.",
+            "season_number": 1,
+            "vote_average": 8.2,
+            "cover": "http://odenfull.co:2086/images/KeP2qSI0tK06lo-JWm73-NEATDVzG_y7348Y_LeH05sBdvRX6bMjyCzJmi2bHIlT08j1rDqhSwsuipVE7AGxE88fUig61HWOZpFJ7D4YMU4.jpg",
+            "cover_big": "http://odenfull.co:2086/images/KeP2qSI0tK06lo-JWm73-NEATDVzG_y7348Y_LeH05sBdvRX6bMjyCzJmi2bHIlT08j1rDqhSwsuipVE7AGxE88fUig61HWOZpFJ7D4YMU4.jpg"
+        }
+    ],
+    "info": {
+        "name": "Cobra Kai (2018)",
+        "title": "Cobra Kai",
+        "year": "2018",
+        "cover": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/wbFSslyJrJV0nn3lv0KZb2bEfs1.jpg",
+        "plot": "Secuela de Karate Kid, 30 años después de los acontecimientos del film original y con el mismo reparto repitiendo los papeles principales.",
+        "cast": "",
+        "director": "",
+        "genre": "Action & Adventure, Drama, Comedia",
+        "release_date": "2018-05-02",
+        "releaseDate": "2018-05-02",
+        "last_modified": "1731868663",
+        "rating": "8",
+        "rating_5based": 4,
+        "backdrop_path": [
+            "https://image.tmdb.org/t/p/w1280/zymbuoBoL1i94xAOzVJF6IuWLfD.jpg"
+        ],
+        "youtube_trailer": "xCwwxNbtK6Y",
+        "episode_run_time": "30",
+        "category_id": "364",
+        "category_ids": [
+            364
+        ]
+    },
+    "episodes": {
+        "1": [
+            {
+                "id": "387884",
+                "episode_num": "1",
+                "title": "Cobra Kai - S01E01 - Degenerado primero",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1433787,
+                    "release_date": "2018-05-02",
+                    "plot": "Después de tocar fondo, Johnny, que se ha dado a la bebida y vive a la sombra de su antiguo rival, Daniel, decide reabrir el dojo de kárate Cobra Kai.",
+                    "duration_secs": 1644,
+                    "duration": "00:27:24",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLFcNgQm6FD2ykQ_l1ZlFojDZtxQCODqMLL6audLAVXcQ.jpg",
+                    "bitrate": 1274,
+                    "rating": 7.9,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLFcNgQm6FD2ykQ_l1ZlFojDZtxQCODqMLL6audLAVXcQ.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387885",
+                "episode_num": "2",
+                "title": "Cobra Kai - S01E02 - Pegar primero",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481482,
+                    "release_date": "2018-05-02",
+                    "plot": "Daniel siente una sacudida al ver el nuevo dojo Cobra Kai. Más tarde, se entera de un incidente violento que tiene que ver con Kyler, el chico que le gusta a Sam.",
+                    "duration_secs": 1639,
+                    "duration": "00:27:19",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyL0Xg2-f2v9b7ye3ieWXQH-vBzGllNxxsIAw_vLNOvzvI.jpg",
+                    "bitrate": 1100,
+                    "rating": 8.3,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyL0Xg2-f2v9b7ye3ieWXQH-vBzGllNxxsIAw_vLNOvzvI.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387886",
+                "episode_num": "3",
+                "title": "Cobra Kai - S01E03 - Esqueleto",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481483,
+                    "release_date": "2018-05-02",
+                    "plot": "Daniel se presta voluntario para ir de vigilante al baile de Halloween y así tener controlada a Sam. Mientras, Johnny intenta conseguir más alumnos para su dojo.",
+                    "duration_secs": 1347,
+                    "duration": "00:22:27",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLVSENXj36Q99xCbcBZjM2_ncIpGuZmJ1oIs0ww6mcHdk.jpg",
+                    "bitrate": 1182,
+                    "rating": 8.2,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLVSENXj36Q99xCbcBZjM2_ncIpGuZmJ1oIs0ww6mcHdk.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387887",
+                "episode_num": "4",
+                "title": "Cobra Kai - S01E04 - Cobra Kai nunca muere",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481484,
+                    "release_date": "2018-05-02",
+                    "plot": "Alguien hace pintadas en un cartel de Daniel. La madre de Miguel le prohíbe continuar con las clases de kárate. Johnny descubre que Robby ha estado faltando a clase.",
+                    "duration_secs": 1664,
+                    "duration": "00:27:44",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLl4TvFAvHlSOoC6DGxQOVhEHtr325lFCikve0XpEf0fs.jpg",
+                    "bitrate": 1009,
+                    "rating": 7.7,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLl4TvFAvHlSOoC6DGxQOVhEHtr325lFCikve0XpEf0fs.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387888",
+                "episode_num": "5",
+                "title": "Cobra Kai - S01E05 - Contrapeso",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481485,
+                    "release_date": "2018-05-02",
+                    "plot": "Cobra Kai consigue una alumna nueva. A Daniel se le ocurre una idea para vengarse de Johnny. Miguel defiende a Sam cuando Kyler la humilla en el instituto.",
+                    "duration_secs": 1930,
+                    "duration": "00:32:10",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyL2bDvzY9tSGy65YXAkZfKizFPOqZJ5RAAubpufJEu70c.jpg",
+                    "bitrate": 1141,
+                    "rating": 8.6,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyL2bDvzY9tSGy65YXAkZfKizFPOqZJ5RAAubpufJEu70c.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387889",
+                "episode_num": "6",
+                "title": "Cobra Kai - S01E06 - Nido",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481486,
+                    "release_date": "2018-05-02",
+                    "plot": "Tras la pelea de Miguel, muchos jóvenes se apuntan a Cobra Kai, pero Johnny los trata mal. Con la intención de enfadar a su padre, Robby empieza a trabajar para Daniel.",
+                    "duration_secs": 1750,
+                    "duration": "00:29:10",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLKWsj53K6G9K07RA71H50gk80SswIfYFKyCz483UwzPc.jpg",
+                    "bitrate": 1035,
+                    "rating": 7.6,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLKWsj53K6G9K07RA71H50gk80SswIfYFKyCz483UwzPc.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387890",
+                "episode_num": "7",
+                "title": "Cobra Kai - S01E07 - All Valley",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481487,
+                    "release_date": "2018-05-02",
+                    "plot": "Johnny debe convencer al comité de un torneo para que levante el veto de por vida sobre Cobra Kai, pero Daniel es uno de sus miembros. Miguel y Sam tienen una cita.",
+                    "duration_secs": 1683,
+                    "duration": "00:28:03",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLOBLkRbLzh3yJdGIykssUEjs_xfWaY5ygZh-4lW73k3U.jpg",
+                    "bitrate": 1120,
+                    "rating": 8.3,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLOBLkRbLzh3yJdGIykssUEjs_xfWaY5ygZh-4lW73k3U.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387891",
+                "episode_num": "8",
+                "title": "Cobra Kai - S01E08 - Mudando de piel",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481488,
+                    "release_date": "2018-05-02",
+                    "plot": "Johnny prepara a sus alumnos para el campeonato de All Valley. Daniel empieza a entrenar a Robby en Miyagi-Do sin saber que su alumno es hijo de Johnny.",
+                    "duration_secs": 1732,
+                    "duration": "00:28:52",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLTh9JliUr1t0tVoKPsqQiQNeikXIhJIyMVQmz6zq-1mg.jpg",
+                    "bitrate": 1281,
+                    "rating": 8.1,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLTh9JliUr1t0tVoKPsqQiQNeikXIhJIyMVQmz6zq-1mg.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387892",
+                "episode_num": "9",
+                "title": "Cobra Kai - S01E09 - Diferentes pero igual",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481489,
+                    "release_date": "2018-05-02",
+                    "plot": "El pasado llama a la puerta de Daniel cuando Johnny le pide explicaciones sobre su coche. Los alumnos de Cobra Kai planean vengarse de los chicos y chicas más populares.",
+                    "duration_secs": 1790,
+                    "duration": "00:29:50",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyL6gGYfGoAulH_ejlf8d_lI3gxwActtHXORjXV0BzySd4.jpg",
+                    "bitrate": 1167,
+                    "rating": 8.4,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyL6gGYfGoAulH_ejlf8d_lI3gxwActtHXORjXV0BzySd4.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            },
+            {
+                "id": "387893",
+                "episode_num": "10",
+                "title": "Cobra Kai - S01E10 - Piedad",
+                "container_extension": "mp4",
+                "info": {
+                    "tmdb_id": 1481490,
+                    "release_date": "2018-05-02",
+                    "plot": "Queda poco para el torneo y Johnny enseña a sus alumnos la tercera regla de Cobra Kai: sin piedad. Reaparece alguien del pasado.",
+                    "duration_secs": 2156,
+                    "duration": "00:35:56",
+                    "movie_image": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLlSAtfRQVlij2M3tsJeOwD8s5ENgaeP0wPxalZPIZzkA.jpg",
+                    "bitrate": 1231,
+                    "rating": 8.9,
+                    "season": "1",
+                    "cover_big": "http://odenfull.co:2086/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLlSAtfRQVlij2M3tsJeOwD8s5ENgaeP0wPxalZPIZzkA.jpg"
+                },
+                "subtitles": [],
+                "custom_sid": "",
+                "added": "1722372597",
+                "season": 1,
+                "direct_source": ""
+            }
+        ]
+    }
+}

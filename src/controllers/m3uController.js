@@ -1,4 +1,4 @@
-const { response } = require('express');
+const m3uService = require('../services/m3uService');
 
 class M3UController {
     async parseM3U(req, res) {
@@ -7,7 +7,6 @@ class M3UController {
             return res.status(400).json({ error: "URL del archivo M3U es requerida." });
         }
         try {
-            const m3uService = require('../services/m3uService');
             const parsedData = await m3uService.parseM3U(url);
             console.log('Datos parseados:', parsedData);
 
@@ -26,7 +25,6 @@ class M3UController {
         }
 
         try {
-            const m3uService = require('../services/m3uService');
             const parsedData = await m3uService.parseM3U(url);
             console.log('Datos parseados:', parsedData);
 
@@ -59,7 +57,6 @@ class M3UController {
             return res.status(400).json({ error: "El parámetro 'type' son requerido." });
         }
         try {
-            const m3uService = require('../services/m3uService');
             const parsedData = await m3uService.parseIPTVUrl(type);
             console.log('Datos parseados:', parsedData);
 
@@ -72,7 +69,6 @@ class M3UController {
 
     async determineUrl(req, res) {
         const { id } = req.params;
-        const m3uService = require('../services/m3uService');
         const urlList = m3uService.getUrls();
         const item = urlList.find(item => item.id === id);
         const getData = await m3uService.parseM3U(item.url);
@@ -98,7 +94,6 @@ class M3UController {
         }
 
         try {
-            const m3uService = require('../services/m3uService');
             const urlList = m3uService.getUrls();
             const item = urlList.find(item => item.id === id);
             const parsedData = await m3uService.parseM3U(item.url);
@@ -120,6 +115,20 @@ class M3UController {
             return res.json(response);
         } catch (error) {
             return res.status(500).json({ error: "Error al analizar los archivos M3U." });
+        }
+    }
+
+    async getGroupedEpisodes(req, res) {
+        const { seriesId } = req.params;
+        if (!seriesId) {
+            return res.status(400).json({ error: "El parámetro 'seriesId' es requerido." });
+        }
+
+        try {
+            const groupedData = await m3uService.groupEpisodesBySeason(seriesId);
+            return res.json(groupedData);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al obtener los episodios agrupados." });
         }
     }
 

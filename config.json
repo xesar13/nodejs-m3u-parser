@@ -1,11 +1,11 @@
 {
-    "base_url": "http://bazarpremium.digital:8080",
-    "username": "Rn3V3vWxhC9U",
-    "password": "uh6RDtufna3r",
+    "base_url": "http://odenfull.co:2086",
+    "username": "factorizacion",
+    "password": "M6PJeDF8m5",
     "stream_types": {
         "live": ["get_live_streams", "get_live_categories"],
         "movie": ["get_vod_streams", "get_vod_categories"],
-        "series": ["get_series", "get_series_categories"]
+        "series": ["get_series", "get_series_categories","get_series_info"]
     },
     "stream_extensions": {
         "live": "m3u8",
