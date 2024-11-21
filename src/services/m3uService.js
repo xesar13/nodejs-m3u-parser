@@ -144,7 +144,7 @@ async getSeriesData(seriesInfo,base_url,username,password,seriesId) {
         lastUpdated: new Date().toISOString(),
         series: [
             {
-                id: `series_${seriesData.info.title.replace(/\s+/g, '_').toLowerCase()}_${seriesId}`,
+                id: `${seriesId}`,
                 title: seriesData.info.title,
                 releaseDate: seriesData.info.releaseDate,
                 shortDescription: seriesData.info.plot,
