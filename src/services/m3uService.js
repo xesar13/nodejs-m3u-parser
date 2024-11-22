@@ -241,14 +241,22 @@ async mapAndFillSeriesData() {
 }
 
 async getStoredSeriesData() {
-    const dataDir = path.join(__dirname, '../../data/series');
+   /* const configPath = this.getConfig();
+    const { base_url, username, password,stream_types,datalimit } = configPath;
+    const domain = this.extractDomain(base_url);
+    const dataDir = path.join(__dirname, `../../data/series/series_${domain}.json`);
     const files = fs.readdirSync(dataDir);
     const seriesData = files.map(file => {
         const filePath = path.join(dataDir, file);
         const fileData = fs.readFileSync(filePath);
         return JSON.parse(fileData);
-    });
-    return seriesData;
+    });*/
+    const filePath = path.join(__dirname, './../data/series/series_${domain}.json');
+    if (!fs.existsSync(filePath)) {
+        throw new Error('El archivo config.json no existe.');
+    }
+    const fileData = fs.readFileSync(filePath);
+    return JSON.parse(fileData);
 }
 
 }
