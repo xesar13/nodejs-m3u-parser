@@ -1,12 +1,17 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+
 class M3UService {
     constructor() {
         if (!M3UService.instance) {
             M3UService.instance = this;
         }
         return M3UService.instance;
+    }
+    extractDomain(url) {
+        const { hostname } = new URL(url);
+        return hostname;
     }
 async  parseM3U(url) {
     try {
@@ -135,63 +140,117 @@ async  parseIPTVUrl(type) {
 }
 
 
-async getSeriesData(seriesInfo,base_url,username,password,seriesId) {
-    const reponse = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${seriesInfo}&series_id=${seriesId}`);
-    const seriesData = reponse.data;
+async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
+    const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${seriesInfo}&series_id=${seriesId}`);
+    const seriesData = response.data;
+
+    if (!seriesData.seasons || !seriesData.episodes) {
+        throw new Error('Datos de temporadas o episodios no encontrados');
+    }
+
+    let count = 0; // Inicializar el contador
+
+    // Convertir seriesData.episodes en un arreglo
+    const episodesArray = Object.values(seriesData.episodes);
+
+    const seasons = seriesData.seasons
+        .filter(season => episodesArray[season.season_number - 1]?.length > 0) // Omitir temporadas sin episodios
+        .map(season => {
+            const seasonNumber = season.season_number || 1; // Asegurarse de que season_number sea válido
+            const episodes = episodesArray[seasonNumber - 1].map(episode => {
+                const episodeData = {
+                    id: `${episode.id}`,
+                    title: episode.title,
+                    episodeNumber: episode.episode_num,
+                    content: {
+                        dateAdded: episode.info.release_date,
+                        videos: [{
+                            videoType: "HLS",
+                            url: `${base_url}/series/${username}/${password}/${episode.id}.${episode.container_extension || 'mp4'}`,
+                            quality: "HD"
+                        }],
+                        duration: episode.info.duration_secs,
+                        captions: episode.subtitles.map(subtitle => ({
+                            language: subtitle.language,
+                            captionType: subtitle.type,
+                            url: subtitle.url
+                        })),
+                        language: "en-us"
+                    },
+                    thumbnail: episode.info.movie_image,
+                    shortDescription: episode.info.plot,
+                    releaseDate: episode.info.release_date,
+                    longDescription: episode.info.plot,
+                    tags: ["series"],
+                    genres: seriesData.info.genre ? seriesData.info.genre.split(',').map(genre => genre.trim()) : [],
+                    count: count // Agregar el contador al episodio
+                };
+                count++; // Incrementar el contador
+                return episodeData;
+            });
+            return {
+                title: season.name,
+                episodes: episodes
+            };
+        });
+
     return {
         providerName: "Roku Developers",
         language: "en-US",
         lastUpdated: new Date().toISOString(),
-        series: [
+        series:[
             {
-                id: `${seriesId}`,
-                title: seriesData.info.title,
-                releaseDate: seriesData.info.releaseDate,
-                shortDescription: seriesData.info.plot,
-                thumbnail: seriesData.info.cover,
-                genres: seriesData.info.genre.split(',').map(genre => genre.trim()),
-                tags: ["series"],
-                seasons: seriesData.seasons.map(season => ({
-                    title: season.name,
-                    episodes: seriesData.episodes[season.season_number].map(episode => ({
-                        id: `shortform-${episode.id}`,
-                        title: episode.title,
-                        episodeNumber: episode.episode_num,
-                        content: {
-                            dateAdded: episode.info.release_date,
-                            videos: [{
-                                videoType: "HLS",
-                                url: `${base_url}/series/${username}/${password}/${episode.id}.${episode.container_extension || 'mp4'}`,
-                                quality: "HD"
-                            }],
-                            duration: episode.info.duration_secs,
-                            captions: episode.subtitles.map(subtitle => ({
-                                language: subtitle.language,
-                                captionType: subtitle.type,
-                                url: subtitle.url
-                            })),
-                            language: "en-us"
-                        },
-                        thumbnail: episode.info.movie_image,
-                        shortDescription: episode.info.plot,
-                        releaseDate: episode.info.release_date,
-                        longDescription: episode.info.plot,
-                        tags: ["series"],
-                        genres: seriesData.info.genre.split(',').map(genre => genre.trim())
-                    }))
-                }))
+        id: `${seriesId}`,
+        title: seriesData.info.title,
+        releaseDate: seriesData.info.releaseDate,
+        shortDescription: seriesData.info.plot,
+        thumbnail: seriesData.info.cover,
+        genres: seriesData.info.genre ? seriesData.info.genre.split(',').map(genre => genre.trim()) : [],
+        tags: ["series"],
+        seasons: seasons
             }
         ]
     };
 }
 
-async groupEpisodesBySeason(seriesId) {
+async mapAndFillSeriesData() {
+    const pLimit = (await import('p-limit')).default; // Importación dinámica de p-limit
     const configPath = this.getConfig();
-    const { base_url, username, password, stream_types } = configPath;
-    const seriesInfo = stream_types.series[2]; // Obtener el valor de `get_series_info`
-    const response = await this.getSeriesData(seriesInfo,base_url,username,password,seriesId);
-    return response;
+    const { base_url, username, password,stream_types,datalimit } = configPath;
+    const seriesInfo = stream_types.series[2];
+    const {limit_data,active} = datalimit;
+    // Obtener todos los datos de la serie
+    const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=get_series`);
+
+    const seriesList = active ? response.data.slice(0, limit_data || 5) : response.data;
+
+    const limit = pLimit(5); // Limitar a 5 solicitudes simultáneas
+
+    // Mapear y llenar los datos de cada serie
+    const filledSeriesData = await Promise.all(seriesList.map(series => 
+        limit(async () => {
+            const seriesData = await this.getSeriesData(seriesInfo, base_url, username, password, series.series_id);
+            return seriesData;
+        })
+    ));
+    const domain = this.extractDomain(base_url);
+    // Guardar los datos en un archivo JSON
+    fs.writeFileSync(path.join(__dirname, `../../data/series/series_${domain}.json`), JSON.stringify(filledSeriesData, null, 2));
+
+    return filledSeriesData;
 }
+
+async getStoredSeriesData() {
+    const dataDir = path.join(__dirname, '../../data/series');
+    const files = fs.readdirSync(dataDir);
+    const seriesData = files.map(file => {
+        const filePath = path.join(dataDir, file);
+        const fileData = fs.readFileSync(filePath);
+        return JSON.parse(fileData);
+    });
+    return seriesData;
+}
+
 }
 const instance = new M3UService();
 Object.freeze(instance);

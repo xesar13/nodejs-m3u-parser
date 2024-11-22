@@ -10,5 +10,7 @@ router.get('/determine-url/:id', m3uController.determineUrl.bind(m3uController))
 router.get('/search-by-title/:title/:id', m3uController.searchByTitle.bind(m3uController)); // Nueva ruta
 router.get('/iptv-json/:type', m3uController.parseIPTVJson.bind(m3uController)); // Nueva ruta
 router.get('/seasons/:seriesId', m3uController.getGroupedEpisodes.bind(m3uController)); // Nueva ruta
+router.get('/get-all-series', m3uController.mapAndFillSeries.bind(m3uController)); // Nueva ruta
+router.get('/get-stored-series', m3uController.getStoredSeries.bind(m3uController)); // Nueva ruta
 
 module.exports = router;

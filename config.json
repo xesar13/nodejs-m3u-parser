@@ -11,6 +11,10 @@
         "live": "m3u8",
         "vod": "mp4"
     },
+	"datalimit": {
+        "limit_data": 1,
+        "active": false
+    },
     "categories": {
         "537": "NOTICIAS",
         "526": "DEPORTES PREMIUM",

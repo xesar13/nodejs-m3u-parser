@@ -1,6 +1,7 @@
 const m3uService = require('../services/m3uService');
 
 class M3UController {
+    
     async parseM3U(req, res) {
         const { url } = req.body;
         if (!url) {
@@ -53,17 +54,22 @@ class M3UController {
 
     async parseIPTVJson(req, res) {
         const { type } = req.params;
+        let parsedData;
         if (!type) {
             return res.status(400).json({ error: "El parámetro 'type' son requerido." });
         }
         try {
-            const parsedData = await m3uService.parseIPTVUrl(type);
+            if (type === 'series') {
+                parsedData = await m3uService.mapAndFillSeriesData();
+            }else{
+                parsedData = await m3uService.parseIPTVUrl(type);
+            }
             console.log('Datos parseados:', parsedData);
 
             //const response = await this.buildResponse(parsedData);
             return res.json(parsedData);
         } catch (error) {
-            return res.status(500).json({ error: "Error al analizar la url JSON." });
+            return res.status(500).json({ error: "Error al analizar la url JSON. =>" + error});
         }
     }
 
@@ -132,6 +138,26 @@ class M3UController {
         }
     }
 
+
+    async mapAndFillSeries(req, res) {
+
+        try {
+            const filledSeriesData = await m3uService.mapAndFillSeriesData();
+            return res.json(filledSeriesData);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al mapear y llenar los datos de las series." });
+        }
+    }
+
+    async getStoredSeries(req, res) {
+        try {
+            const storedSeriesData = await m3uService.getStoredSeriesData();
+            return res.json(storedSeriesData);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al obtener los datos almacenados de las series." });
+        }
+    }
+    
     async buildResponse(parsedData) {
         const response = parsedData;
         return {

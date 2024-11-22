@@ -1,0 +1,29 @@
+[
+    {
+        "num": 1,
+        "name": "Los Octonautas (2010)",
+        "title": "Los Octonautas",
+        "year": "2010",
+        "stream_type": "series",
+        "series_id": 3636,
+        "cover": "http://148.251.43.254:80/images/1CX9HZ1TpsR6jq_dGSnHkF7DaaYG-JnaH_5zbvTz1M5mB5g6BUIWNSoocDNYisyLU3H36rWnUCzfZe5fTMKf7mdzL4lOYRuxl7c62X1pJmg.jpg",
+        "plot": "La serie está protagonizada por los Octonautas, un intrépido grupo de exploradores submarinos. La misión de los Octonautas es “explorar, rescatar y proteger” el mundo marino y a sus habitantes. En una flota de naves acuáticas, rescatan criaturas del mar, exploran el mundo bajo el agua, y muchas veces salvan el día antes de regresar a salvo a su base, el Octomódulo. Junto a los tres protagonistas (el Capitán Polar, Kwazii y Pepe Pingüino) los Octonautas siempre se embarcan en una emocionante aventura.",
+        "cast": "",
+        "director": "",
+        "genre": "",
+        "release_date": "2010-10-04",
+        "releaseDate": "2010-10-04",
+        "last_modified": "1732149013",
+        "rating": "0",
+        "rating_5based": 0,
+        "backdrop_path": [
+            "http://148.251.43.254:80/images/1CX9HZ1TpsR6jq_dGSnHkL3RYtCxzpf9bXBCAmvYmQVZ0oR60yNTO225LRUULaOhboSK0tzZucf92yxhYtD_t8cVpRF7vljmTyv2ef4fVpQ.jpg"
+        ],
+        "youtube_trailer": "",
+        "episode_run_time": "15",
+        "category_id": "368",
+        "category_ids": [
+            368
+        ]
+    }
+]
