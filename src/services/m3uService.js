@@ -165,7 +165,7 @@ async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
                     content: {
                         dateAdded: episode.info.release_date,
                         videos: [{
-                            videoType: "HLS",
+                            videoType: episode.container_extension.toUpperCase() || 'MP4',
                             url: `${base_url}/series/${username}/${password}/${episode.id}.${episode.container_extension || 'mp4'}`,
                             quality: "HD"
                         }],
@@ -195,11 +195,7 @@ async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
         });
 
     return {
-        providerName: "Roku Developers",
-        language: "en-US",
-        lastUpdated: new Date().toISOString(),
-        series:[
-            {
+
         id: `${seriesId}`,
         title: seriesData.info.title,
         releaseDate: seriesData.info.releaseDate,
@@ -208,8 +204,7 @@ async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
         genres: seriesData.info.genre ? seriesData.info.genre.split(',').map(genre => genre.trim()) : [],
         tags: ["series"],
         seasons: seasons
-            }
-        ]
+        
     };
 }
 
@@ -241,9 +236,7 @@ async mapAndFillSeriesData() {
 }
 
 async getStoredSeriesData() {
-   /* const configPath = this.getConfig();
-    const { base_url, username, password,stream_types,datalimit } = configPath;
-    const domain = this.extractDomain(base_url);
+   /*
     const dataDir = path.join(__dirname, `../../data/series/series_${domain}.json`);
     const files = fs.readdirSync(dataDir);
     const seriesData = files.map(file => {
@@ -251,12 +244,20 @@ async getStoredSeriesData() {
         const fileData = fs.readFileSync(filePath);
         return JSON.parse(fileData);
     });*/
-    const filePath = path.join(__dirname, './../data/series/series_${domain}.json');
+     const configPath = this.getConfig();
+    const { base_url} = configPath;
+    const domain = this.extractDomain(base_url);
+    const filePath = path.join(__dirname, `../../data/series/series_${domain}.json`);
     if (!fs.existsSync(filePath)) {
-        throw new Error('El archivo config.json no existe.');
+        throw new Error(`El archivo series_${domain}.json no existe.`);
     }
-    const fileData = fs.readFileSync(filePath);
-    return JSON.parse(fileData);
+    try {
+        const fileData = fs.readFileSync(filePath);
+        return JSON.parse(fileData);
+    }
+    catch (error) {
+        throw new Error(error + ` Error al leer el archivo series_${domain}.json`);
+    }
 }
 
 }

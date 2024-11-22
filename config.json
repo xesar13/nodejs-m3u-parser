@@ -12,7 +12,7 @@
         "vod": "mp4"
     },
 	"datalimit": {
-        "limit_data": 1,
+        "limit_data": 2,
         "active": false
     },
     "categories": {

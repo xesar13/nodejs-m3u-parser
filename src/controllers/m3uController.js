@@ -152,7 +152,14 @@ class M3UController {
     async getStoredSeries(req, res) {
         try {
             const storedSeriesData = await m3uService.getStoredSeriesData();
-            return res.json(storedSeriesData);
+            
+            return res.json({
+                providerName: "Roku Developers",
+                language: "en-US",
+                lastUpdated: new Date().toISOString(),
+                series:[
+                    ...storedSeriesData
+            ]});
         } catch (error) {
             return res.status(500).json({ error: "Error al obtener los datos almacenados de las series." });
         }
