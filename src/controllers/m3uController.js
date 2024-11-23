@@ -132,7 +132,13 @@ class M3UController {
 
         try {
             const groupedData = await m3uService.groupEpisodesBySeason(seriesId);
-            return res.json(groupedData);
+            return res.json({
+                providerName: "Roku Developers",
+                language: "en-US",
+                lastUpdated: new Date().toISOString(),
+                series:[
+                        groupedData
+                ]});
         } catch (error) {
             return res.status(500).json({ error: "Error al obtener los episodios agrupados." });
         }

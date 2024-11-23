@@ -260,6 +260,14 @@ async getStoredSeriesData() {
     }
 }
 
+async groupEpisodesBySeason(seriesId) {
+    const configPath = this.getConfig();
+    const { base_url, username, password, stream_types } = configPath;
+    const seriesInfo = stream_types.series[2]; // Obtener el valor de `get_series_info`
+    const response = await this.getSeriesData(seriesInfo,base_url,username,password,seriesId);
+    return response;
+}
+
 }
 const instance = new M3UService();
 Object.freeze(instance);
