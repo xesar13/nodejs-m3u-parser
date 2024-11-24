@@ -158,10 +158,11 @@ async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
         .map(season => {
             const seasonNumber = season.season_number || 1; // Asegurarse de que season_number sea válido
             const episodes = episodesArray[seasonNumber - 1].map(episode => {
+                const episodeNumber = typeof episode.episode_num === 'string' ? parseInt(episode.episode_num, 10) : episode.episode_num || count + 1;
                 const episodeData = {
                     id: `${episode.id}`,
                     title: episode.title,
-                    episodeNumber: episode.episode_num,
+                    episodeNumber: episodeNumber,
                     content: {
                         dateAdded: episode.info.release_date,
                         videos: [{
@@ -183,7 +184,6 @@ async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
                     longDescription: episode.info.plot,
                     tags: ["series"],
                     genres: seriesData.info.genre ? seriesData.info.genre.split(',').map(genre => genre.trim()) : [],
-                    count: count // Agregar el contador al episodio
                 };
                 count++; // Incrementar el contador
                 return episodeData;
