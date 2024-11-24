@@ -156,13 +156,13 @@ async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
     const seasons = seriesData.seasons
         .filter(season => episodesArray[season.season_number - 1]?.length > 0) // Omitir temporadas sin episodios
         .map(season => {
-            const seasonNumber = season.season_number || 1; // Asegurarse de que season_number sea válido
+            const seasonNumber = season.season_number || 1;
             const episodes = episodesArray[seasonNumber - 1].map(episode => {
-                const episodeNumber = typeof episode.episode_num === 'string' ? parseInt(episode.episode_num, 10) : episode.episode_num || count + 1;
+                const episodeNumbers = typeof episode.episode_num === 'string' ? parseInt(episode.episode_num) : episode.episode_num || (count + 1).toString(); // Asegurarse de que season_number sea válido
                 const episodeData = {
                     id: `${episode.id}`,
                     title: episode.title,
-                    episodeNumber: episodeNumber,
+                    episodeNumber: episodeNumbers,
                     content: {
                         dateAdded: episode.info.release_date,
                         videos: [{
