@@ -2,6 +2,8 @@
     "base_url": "http://odenfull.co:2086",
     "username": "factorizacion",
     "password": "M6PJeDF8m5",
+	"longDescriptionDefault":"",
+	"shortDescriptionDefault":"",
     "stream_types": {
         "live": ["get_live_streams", "get_live_categories"],
         "movie": ["get_vod_streams", "get_vod_categories"],
