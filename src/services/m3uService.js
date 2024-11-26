@@ -50,69 +50,44 @@ async  parseM3U(url) {
 }
 
 async  parseIPTVUrl(type) {
+    const pLimit = (await import('p-limit')).default; // Importación dinámica de p-limit
+
+    let getData;
     try {
         const configPath = this.getConfig();
-        
         const { base_url, username, password, stream_types, stream_extensions, categories,menustart } = configPath;
         if (type === 'menu') {
-            return {
-                providerName: "Roku Developers",
-                language: "en-US",
-                lastUpdated: new Date().toISOString(),
-                ...menustart
-            };
+            getData = menustart
         }
         const [streamAction, categoryAction] = stream_types[type];
 
-        const responseCategories = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${categoryAction}`);
-        const categoriesData = responseCategories.data;
+            const responseCategories = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${categoryAction}`);
+            const categoriesData = responseCategories.data;
+    
+            const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${streamAction}`);
+            const data = response.data;
+            //getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
+        //getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
+        if (type === 'movie') {
+            getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
+        } else if (type === 'series-by-categories') {
+            
+        const limit = pLimit(5); // Limitar a 5 solicitudes simultáneas
+        getData = await limit(async () => {
+                const seriesData = await this.getSeriesDataByCategories(categoriesData,data);
+                return seriesData;
+            });
+        }else if (type === 'series') {
+            
+            getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
 
-        const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${streamAction}`);
-        const data = response.data;
-
-      //  const filteredData = data.filter(item => categoriesData.some(category => category.hasOwnProperty(item.category_id)));
-        //const filteredData = data.filter(item => categoriesData.some(category => category.category_id === item.category_id));
-        //const dataToUse = filteredData.length ? filteredData : data;
-
-        const filteredData = data.filter(item => categoriesData.some(category => category.category_id === item.category_id));
-        const dataToUse = filteredData.length ? filteredData : data;
-
-        const categorizedData = dataToUse.reduce((acc, item) => {
-            const category = categoriesData.find(category => category.category_id === item.category_id);
-            const categoryName = category ? category.category_name.trim() : 'Unknown';
-               const parsedItem = {
-                longDescription: 'Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.',
-                thumbnail: item.stream_icon || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
-                releaseDate: '2020-01-20',
-                genres: ['educational'],
-                tags: [type],
-                id: item.stream_id || item.series_id,
-                shortDescription: 'Demonstrates the Roku automated channel testing software.',
-                title: item.name,
-                content: {
-                    duration: 713,
-                    videos: [{
-                        videoType:  item.stream_type || 'm3u8',
-                        url: `${base_url}/${type}/${username}/${password}/${item.stream_id || item.series_id}.${item.container_extension || 'm3u8'}`,
-                        quality: 'HD'
-                    }],
-                    language: 'en-us',
-                    dateAdded: '2020-01-29T02:39:10Z'
-                }
-            };
-
-            if (!acc[categoryName]) {
-                acc[categoryName] = [];
             }
-            acc[categoryName].push(parsedItem);
-            return acc;
-        }, {});
 
         return {
             providerName: "Roku Developers",
             language: "en-US",
             lastUpdated: new Date().toISOString(),
-            ...categorizedData
+            ...getData
         };
     } catch (error) {
         throw new Error('Error al obtener el archivo JSON: ' + error.message);
@@ -139,11 +114,7 @@ async  parseIPTVUrl(type) {
     return Math.random().toString(36).substr(2, 16);
 }
 
-
-async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
-    const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${seriesInfo}&series_id=${seriesId}`);
-    const seriesData = response.data;
-
+getSeriesData(base_url, username, password,  seriesData, seriesId) {
     if (!seriesData.seasons || !seriesData.episodes) {
         throw new Error('Datos de temporadas o episodios no encontrados');
     }
@@ -208,6 +179,67 @@ async getSeriesData(seriesInfo, base_url, username, password, seriesId) {
     };
 }
 
+async getSeriesDataByCategories(categoriesData, data, categoryLimit = 1) {
+    const filteredData = data.filter(item => categoriesData.some(category => category.category_id === item.category_id));
+    const dataToUse = filteredData.length ? filteredData : data;
+    const fillSeriesData = await this.mapAndFillSeriesData();
+
+    const categorizedData = dataToUse.reduce((acc, item) => {
+        const category = categoriesData.find(category => category.category_id === item.category_id);
+        const categoryName = category ? category.category_name.trim() : 'Unknown';
+
+        if (!acc[categoryName]) {
+            acc[categoryName] = [];
+        }
+        acc[categoryName] = fillSeriesData;
+        return acc;
+    }, {});
+
+    // Limitar el número de categorías
+    const limitedCategories = Object.keys(categorizedData).slice(0, categoryLimit).reduce((acc, key) => {
+        acc[key] = categorizedData[key];
+        return acc;
+    }, {});
+
+    return limitedCategories;
+}
+
+getMoviesData(categoriesData,data,base_url, username, password,type){
+    const filteredData = data.filter(item => categoriesData.some(category => category.category_id === item.category_id));
+    const dataToUse = filteredData.length ? filteredData : data;
+
+    const categorizedData = dataToUse.reduce((acc, item) => {
+        const category = categoriesData.find(category => category.category_id === item.category_id);
+        const categoryName = category ? category.category_name.trim() : 'Unknown';
+           const parsedItem = {
+            longDescription: 'Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.',
+            thumbnail: item.stream_icon || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
+            releaseDate: '2020-01-20',
+            genres: ['educational'],
+            tags: [type],
+            id: item.stream_id || item.series_id,
+            shortDescription: 'Demonstrates the Roku automated channel testing software.',
+            title: item.name,
+            content: {
+                duration: 713,
+                videos: [{
+                    videoType:  item.stream_type || 'm3u8',
+                    url: `${base_url}/${type}/${username}/${password}/${item.stream_id || item.series_id}.${item.container_extension || 'm3u8'}`,
+                    quality: 'HD'
+                }],
+                language: 'en-us',
+                dateAdded: '2020-01-29T02:39:10Z'
+            }
+        };
+
+        if (!acc[categoryName]) {
+            acc[categoryName] = [];
+        }
+        acc[categoryName].push(parsedItem);
+        return acc;
+    }, {});
+    return categorizedData;
+}
 async mapAndFillSeriesData() {
     const pLimit = (await import('p-limit')).default; // Importación dinámica de p-limit
     const configPath = this.getConfig();
@@ -222,15 +254,18 @@ async mapAndFillSeriesData() {
     const limit = pLimit(5); // Limitar a 5 solicitudes simultáneas
 
     // Mapear y llenar los datos de cada serie
-    const filledSeriesData = await Promise.all(seriesList.map(series => 
+    const filledSeriesData = Promise.all(seriesList.map(series => 
         limit(async () => {
-            const seriesData = await this.getSeriesData(seriesInfo, base_url, username, password, series.series_id);
+            const dataSeries = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${seriesInfo}&series_id=${series.series_id}`);
+            const seriesData = this.getSeriesData(base_url, username, password, dataSeries.data,series.series_id);
             return seriesData;
         })
     ));
+
+
     const domain = this.extractDomain(base_url);
     // Guardar los datos en un archivo JSON
-    fs.writeFileSync(path.join(__dirname, `../../data/series/series_${domain}.json`), JSON.stringify(filledSeriesData, null, 2));
+    //fs.writeFileSync(path.join(__dirname, `../../data/series/series_${domain}.json`), JSON.stringify(filledSeriesData, null, 2));
 
     return filledSeriesData;
 }
@@ -264,8 +299,17 @@ async groupEpisodesBySeason(seriesId) {
     const configPath = this.getConfig();
     const { base_url, username, password, stream_types } = configPath;
     const seriesInfo = stream_types.series[2]; // Obtener el valor de `get_series_info`
-    const response = await this.getSeriesData(seriesInfo,base_url,username,password,seriesId);
+    const series = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${seriesInfo}&series_id=${seriesId}`);
+    const response = this.getSeriesData(base_url,username,password,series.data,seriesId);    ;
     return response;
+}
+
+async getPaginatedSeriesData(page = 1, limit = 10) {
+    const storedSeriesData = await this.mapAndFillSeriesData();
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const paginatedData = storedSeriesData.slice(startIndex, endIndex);
+    return paginatedData;
 }
 
 }

@@ -171,6 +171,26 @@ class M3UController {
         }
     }
     
+    async mapAndFillSeries(req, res) {
+        const { datalimit } = req.query; // Obtener datalimit de los parámetros de consulta
+        try {
+            const filledSeriesData = await m3uService.mapAndFillSeriesData(datalimit ? parseInt(datalimit) : undefined);
+            return res.json(filledSeriesData);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al mapear y llenar los datos de las series." });
+        }
+    }
+    
+    async getPaginatedSeries(req, res) {
+        const { page = 1, limit = 10 } = req.query; // Obtener page y limit de los parámetros de consulta
+        try {
+            const paginatedSeriesData = await m3uService.getPaginatedSeriesData(parseInt(page), parseInt(limit));
+            return res.json(...paginatedSeriesData);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al obtener los datos paginados de las series." });
+        }
+    }
+
     async buildResponse(parsedData) {
         const response = parsedData;
         return {

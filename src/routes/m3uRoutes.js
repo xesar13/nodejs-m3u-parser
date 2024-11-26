@@ -12,5 +12,6 @@ router.get('/iptv-json/:type', m3uController.parseIPTVJson.bind(m3uController));
 router.get('/seasons/:seriesId', m3uController.getGroupedEpisodes.bind(m3uController)); // Nueva ruta
 router.get('/get-all-series', m3uController.mapAndFillSeries.bind(m3uController)); // Nueva ruta
 router.get('/get-stored-series', m3uController.getStoredSeries.bind(m3uController)); // Nueva ruta
+router.get('/get-paginated-series', m3uController.getPaginatedSeries.bind(m3uController)); // Nueva ruta
 
 module.exports = router;
