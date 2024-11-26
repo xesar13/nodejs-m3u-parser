@@ -59,8 +59,8 @@ class M3UController {
             return res.status(400).json({ error: "El parámetro 'type' son requerido." });
         }
         try {
-            if (type === 'store-series') {
-                parsedData = await m3uService.mapAndFillSeriesData();
+            if (type === 'menu') {
+                parsedData = await m3uService.getMenu();
             }else{
                 parsedData = await m3uService.parseIPTVUrl(type);
             }

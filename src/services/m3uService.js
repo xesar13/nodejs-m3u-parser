@@ -49,6 +49,19 @@ async  parseM3U(url) {
     }
 }
 
+getMenu(){
+    const configPath = this.getConfig();
+    const { menustart } = configPath;
+    const getData = menustart
+    
+    return {
+        providerName: "Roku Developers",
+        language: "en-US",
+        lastUpdated: new Date().toISOString(),
+        ...getData
+    };
+}
+
 async  parseIPTVUrl(type) {
     const pLimit = (await import('p-limit')).default; // Importación dinámica de p-limit
 
@@ -56,18 +69,15 @@ async  parseIPTVUrl(type) {
     try {
         const configPath = this.getConfig();
         const { base_url, username, password, stream_types, stream_extensions, categories,menustart } = configPath;
-        if (type === 'menu') {
-            getData = menustart
-        }
+
         const [streamAction, categoryAction] = stream_types[type];
 
-            const responseCategories = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${categoryAction}`);
-            const categoriesData = responseCategories.data;
+        const responseCategories = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${categoryAction}`);
+        const categoriesData = responseCategories.data;
     
-            const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${streamAction}`);
-            const data = response.data;
-            //getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
-        //getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
+        const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${streamAction}`);
+        const data = response.data;
+
         if (type === 'movie') {
             getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
         } else if (type === 'series-by-categories') {
@@ -213,7 +223,7 @@ getMoviesData(categoriesData,data,base_url, username, password,type){
         const categoryName = category ? category.category_name.trim() : 'Unknown';
            const parsedItem = {
             longDescription: 'Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.',
-            thumbnail: item.cover || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
+            thumbnail: item.stream_icon || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
             releaseDate: '2020-01-20',
             genres: ['educational'],
             tags: [type],

@@ -13,7 +13,7 @@
     },
 	"datalimit": {
         "limit_data": 2,
-        "active": true
+        "active": false
     },
     "categories": {
         "537": "NOTICIAS",
