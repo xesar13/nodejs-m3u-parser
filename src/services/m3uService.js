@@ -78,16 +78,14 @@ async  parseIPTVUrl(type) {
         const response = await axios.get(`${base_url}/player_api.php?username=${username}&password=${password}&action=${streamAction}`);
         const data = response.data;
 
-        if (type === 'movie') {
-            getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
-        } else if (type === 'series-by-categories') {
+        if (type === 'series-by-categories') {
             
         const limit = pLimit(5); // Limitar a 5 solicitudes simultáneas
         getData = await limit(async () => {
                 const seriesData = await this.getSeriesDataByCategories(categoriesData,data);
                 return seriesData;
             });
-        }else if (type === 'series') {
+        }else  {
             
             getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
 
