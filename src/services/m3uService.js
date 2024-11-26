@@ -222,13 +222,13 @@ getMoviesData(categoriesData,data,base_url, username, password,type){
         const category = categoriesData.find(category => category.category_id === item.category_id);
         const categoryName = category ? category.category_name.trim() : 'Unknown';
            const parsedItem = {
-            longDescription: 'Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.',
-            thumbnail: item.cover  || item.stream_icon || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
+            longDescription: item.longDescription || 'Video that demonstrates the Roku automated channel testing software. It provides a brief overview of the technology stack, and it shows how both the Roku WebDriver and Robot Framework Library can be used for state-driven channel UI automation testing.',
+            thumbnail: item.cover || item.stream_icon || 'http://odenfull.co:2086/images/Kanmk96vTt-hjZj_mC4RcPttLMlmeeoOsTOSXqs4fWXm360tfVL4n72DiGcqnmJjEaLTx-pqpiKPRnq3r3oG1F5G-Ai9TBV7jxWp9OYRkVlvuPHnkAR6-rHFFEGQmOzy8SvYYtEdrb61VYjE1tzklg.png',
             releaseDate: '2020-01-20',
             genres: ['educational'],
             tags: [type],
             id: item.stream_id || item.series_id,
-            shortDescription: 'Demonstrates the Roku automated channel testing software.',
+            shortDescription: item.shortDescription || 'Demonstrates the Roku automated channel testing software.',
             title: item.name,
             content: {
                 duration: 713,
