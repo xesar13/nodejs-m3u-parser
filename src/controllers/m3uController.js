@@ -144,17 +144,6 @@ class M3UController {
         }
     }
 
-
-    async mapAndFillSeries(req, res) {
-
-        try {
-            const filledSeriesData = await m3uService.mapAndFillSeriesData();
-            return res.json(filledSeriesData);
-        } catch (error) {
-            return res.status(500).json({ error: "Error al mapear y llenar los datos de las series." });
-        }
-    }
-
     async getStoredSeries(req, res) {
         try {
             const storedSeriesData = await m3uService.getStoredSeriesData();

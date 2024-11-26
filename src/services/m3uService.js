@@ -87,7 +87,7 @@ async  parseIPTVUrl(type) {
             });
         }else  {
             
-            getData = this.getMoviesData(categoriesData,data,base_url, username, password, type);
+            getData = this.getStreamData(categoriesData,data,base_url, username, password, type);
 
             }
 
@@ -212,8 +212,15 @@ async getSeriesDataByCategories(categoriesData, data, categoryLimit = 1) {
     return limitedCategories;
 }
 
-getMoviesData(categoriesData,data,base_url, username, password,type){
-    const filteredData = data.filter(item => categoriesData.some(category => category.category_id === item.category_id));
+getStreamData(categoriesData,data,base_url, username, password,type){
+    const config = this.getConfig();
+    const { categories } = config;
+    const { filter, active } = categories;
+
+    // Filtrar las categorías si active es true
+    const filteredCategories = active[type] ? Object.keys(filter) : categoriesData.map(category => category.category_id);
+
+    const filteredData = data.filter(item => !filteredCategories.includes(item.category_id.toString()));
     const dataToUse = filteredData.length ? filteredData : data;
 
     const categorizedData = dataToUse.reduce((acc, item) => {

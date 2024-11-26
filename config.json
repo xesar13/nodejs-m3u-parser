@@ -16,18 +16,11 @@
         "active": false
     },
     "categories": {
-        "537": "NOTICIAS",
-        "526": "DEPORTES PREMIUM",
-        "620": "MUNDIAL DE BEISBOL",
-        "525": "CINE PREMIUM",
-        "536": "INFANTILES",
-        "549": "MEXICO",
-        "534": "ENTRETENIMIENTO",
-        "535": "TELEMUNDO-UNIMAS-UNIVISION-GALAVISION",
-        "673": "24/7 EXCLUSIVO PELICULAS",
-        "674": "24/7 EXCLUSIVO SERIES",
-        "675": "24/7 EXCLUSIVO INGLES"
-
+		"filter":{
+       "391":"XXX ADULTOS",
+	   "55":"XXX ADULTOS LIVE"
+		},
+		"active":{"live":true,"movie":true,"series":false}
     },
     "menustart":{
         "menu":[	
