@@ -204,6 +204,16 @@ class M3UController {
             }))
         };
     }
+
+    async checkDeviceId(req, res) {
+        const { deviceId } = req.params;
+        try {
+            const isAvailable = m3uService.isDeviceIdAvailable(deviceId);
+            return res.json({ available: isAvailable });
+        } catch (error) {
+            return res.status(500).json({ error: "Error al verificar el ID del dispositivo." });
+        }
+    }
 }
 
 module.exports = M3UController;

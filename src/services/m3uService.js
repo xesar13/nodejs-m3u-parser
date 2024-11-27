@@ -327,6 +327,13 @@ async getPaginatedSeriesData(page = 1, limit = 10) {
     return paginatedData;
 }
 
+isDeviceIdAvailable(deviceId) {
+    const config = this.getConfig();
+    const { listdeviceid } = config;
+
+    return listdeviceid.includes(deviceId);
+}
+
 }
 const instance = new M3UService();
 Object.freeze(instance);

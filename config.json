@@ -24,6 +24,10 @@
 		},
 		"active":{"live":true,"movie":true,"series":false}
     },
+	"listdeviceid":[
+		"7ae3fa45-3907-5610-b6a2-d7eaa246894a"
+	],
+	
     "menustart":{
         "menu":[	
 		{
